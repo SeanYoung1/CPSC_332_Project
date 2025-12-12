@@ -61,7 +61,6 @@ CREATE TABLE Medical_Record_Diseases (
     FOREIGN KEY (Medical_ID) REFERENCES Medical_Record(Medical_ID)
 );
 
-
 CREATE TABLE Medical_Record_Disabilities (
     Medical_ID          DECIMAL(20,0)   NOT NULL,
     MRDisabilities      VARCHAR(500)    NOT NULL,
@@ -125,10 +124,18 @@ CREATE TABLE Challenges (
     Daily_Challenge     VARCHAR(500)    NOT NULL,
     Challenge_Complete  BOOLEAN         DEFAULT FALSE,
     DailyRivals_Credit  INT             NOT NULL,
-    Leaderboard         VARCHAR(500)    NOT NULL,
+    Special_Challenge   VARCHAR(500)    NOT NULL,
     DL_ID               DECIMAL(20,0)   NOT NULL,
-    PRIMARY KEY (Goal_ID),
+    PRIMARY KEY (Challenge_ID),
     FOREIGN KEY (DL_ID) REFERENCES Daily_Log(Log_ID)
+);
+
+CREATE TABLE User_Challenge (
+    User_ID        DECIMAL(20,0) NOT NULL,
+    Challenge_ID   DECIMAL(20,0) NOT NULL,
+    PRIMARY KEY (User_ID, Challenge_ID),
+    FOREIGN KEY (User_ID) REFERENCES Person(User_ID),
+    FOREIGN KEY (Challenge_ID) REFERENCES Challenges(Challenge_ID)
 );
 
 CREATE TABLE Medication (
@@ -195,7 +202,6 @@ CREATE TABLE MealLog_Breakfast (
     PRIMARY KEY (MealLog_ID, MLBreakfast),
     FOREIGN KEY (MealLog_ID) REFERENCES Meal_Log(MealLog_ID)
 );
-
 
 CREATE TABLE MealLog_Lunch (
     MealLog_ID          DECIMAL(20,0)   NOT NULL,
