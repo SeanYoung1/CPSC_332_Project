@@ -1,3 +1,12 @@
+CREATE TABLE Challenges (
+    Challenge_ID        DECIMAL(20,0)   NOT NULL,
+    Daily_Challenge     VARCHAR(500)    NOT NULL,
+    Challenge_Complete  BOOLEAN         DEFAULT FALSE,
+    DailyRivals_Credit  INT             NOT NULL,
+    Special_Challenge   VARCHAR(500)    NOT NULL,
+    PRIMARY KEY (Challenge_ID)
+);
+
 CREATE TABLE Person (
     User_ID             DECIMAL(20,0)   NOT NULL,
     Email               VARCHAR(50)     NOT NULL,
@@ -7,7 +16,9 @@ CREATE TABLE Person (
     Lname               VARCHAR(20)     NOT NULL,
     Height              FLOAT,
     Birthday            DATE            NOT NULL,
+    Challenge_ID        DECIMAL(20,0)   NOT NULL,
     PRIMARY KEY (User_ID), 
+    FOREIGN KEY (Challenge_ID) REFERENCES Challenges(Challenge_ID),
     UNIQUE (Email),
     CHECK (Height >= 0),
     CHECK (Credit >= 0)
@@ -44,7 +55,7 @@ CREATE TABLE Medical_Record (
     Past_Medication     VARCHAR(500),
     PU_ID               DECIMAL(20,0)   NOT NULL,
     PRIMARY KEY (Medical_ID),
-    UNIQUE (PU_ID)
+    FOREIGN KEY (PU_ID) REFERENCES Person(User_ID)         
 );
 
 CREATE TABLE Medical_Record_Allegies (
@@ -119,22 +130,12 @@ CREATE TABLE Goals (
     FOREIGN KEY (DL_ID) REFERENCES Daily_Log(Log_ID)
 );
 
-CREATE TABLE Challenges (
+CREATE TABLE Challenges_Display (
+    Display_ID          DECIMAL(20,0)   NOT NULL,
     Challenge_ID        DECIMAL(20,0)   NOT NULL,
-    Daily_Challenge     VARCHAR(500)    NOT NULL,
-    Challenge_Complete  BOOLEAN         DEFAULT FALSE,
-    DailyRivals_Credit  INT             NOT NULL,
-    Special_Challenge   VARCHAR(500)    NOT NULL,
     DL_ID               DECIMAL(20,0)   NOT NULL,
-    PRIMARY KEY (Challenge_ID),
-    FOREIGN KEY (DL_ID) REFERENCES Daily_Log(Log_ID)
-);
-
-CREATE TABLE User_Challenge (
-    User_ID        DECIMAL(20,0) NOT NULL,
-    Challenge_ID   DECIMAL(20,0) NOT NULL,
-    PRIMARY KEY (User_ID, Challenge_ID),
-    FOREIGN KEY (User_ID) REFERENCES Person(User_ID),
+    PRIMARY KEY (Display_ID),
+    FOREIGN KEY (DL_ID) REFERENCES Daily_Log(Log_ID),
     FOREIGN KEY (Challenge_ID) REFERENCES Challenges(Challenge_ID)
 );
 
@@ -164,12 +165,12 @@ CREATE TABLE Steps (
 CREATE TABLE Activities (
     Activities_ID       DECIMAL(20,0)   NOT NULL,
     Calories_Burned     INT,
-    Activites_Hours     FLOAT,
+    Activities_Hours     FLOAT,
     DL_ID               DECIMAL(20,0)   NOT NULL,
     PRIMARY KEY (Activities_ID),
     FOREIGN KEY (DL_ID) REFERENCES Daily_Log(Log_ID),
     CHECK (Calories_Burned >= 0),
-    CHECK (Activites_Hours >= 0)          
+    CHECK (Activities_Hours >= 0)          
 );
 
 CREATE TABLE Activities_Type (
@@ -192,7 +193,7 @@ CREATE TABLE Meal_Log (
     CHECK (Calories_Goal >= 0),
     CHECK (Protein >= 0),
     CHECK (Fat >= 0),
-    CHECK (Carbs >= 0)
+    CHECK (Carbs >= 0),
     CHECK (Calories_Amount >= 0)
 );
 
