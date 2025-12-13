@@ -84,7 +84,7 @@ CREATE TABLE Daily_Log (
     Log_Date            DATE            NOT NULL,
     PU_ID               DECIMAL(20,0)   NOT NULL,
     PRIMARY KEY (Log_ID),
-    UNIQUE (Log_Date),
+    UNIQUE (Log_Date, PU_ID),
     FOREIGN KEY (PU_ID) REFERENCES Person(User_ID)
 );
 
