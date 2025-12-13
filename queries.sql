@@ -20,7 +20,7 @@
 
 -- Create a new user account
 INSERT INTO Person (user_id, Email, Credit, FName, Middle_Initial, Lname, Height, Birthday)
-VALUES (:user_id, :Email, 0, :FName, :Middle_Initial, :Lname, :Height. :Birthday );
+VALUES (:user_id, :Email, 0, :FName, :Middle_Initial, :Lname, :Height, :Birthday);
 
 -- Retrieve user profile information
 SELECT user_id, Email, Credit, FName, Middle_Initial, Lname, Height, Birthday
@@ -38,7 +38,6 @@ SET Email = :Email,
     Birthday = :Birthday
 WHERE user_id = :user_id;
 
-
 /* ============================================================
    FUNCTIONAL REQUIREMENT 2 – ACTIVITY Logging
    Description:
@@ -46,16 +45,16 @@ WHERE user_id = :user_id;
    ============================================================ */
 
 -- Log a activity session
-INSERT INTO Activities (Activities_ID, Calories_Burned, Activites_Hour, DL_ID)
-VALUES (:Activities_ID, :Calories_Burned, :Activites_Hours, :DL_ID);
+INSERT INTO Activities (Activities_ID, Calories_Burned, Activities_Hours, DL_ID)
+VALUES (:Activities_ID, :Calories_Burned, :Activities_Hours, :DL_ID);
 
 -- Log a activity type 
-INSERT INTO Actitivities_Type (Activities_ID, ATypes)
-VALUES (:Activities_ID, :ATypes)
+INSERT INTO Activities_Type (Activities_ID, ATypes)
+VALUES (:Activities_ID, :ATypes);
 
 
 -- Retrieve activity session for a specific log
-SELECT Activities_ID, Calories_Burned, Activites_Hour, DL_ID
+SELECT Activities_ID, Calories_Burned, Activities_Hours, DL_ID
 FROM Activities
 WHERE DL_ID = :DL_ID;
 
@@ -68,13 +67,13 @@ WHERE Activities_ID = :Activities_ID;
 -- Update activity information for a specific log
 UPDATE Activities
 SET Calories_Burned = :Calories_Burned,
-    Activites_Hour = :Activites_Hour,
+    Activities_Hours = :Activities_Hours
 WHERE DL_ID = :DL_ID;
 
 -- Update activity type for a specific activity
 UPDATE Activities_Type
 SET ATypes = :ATypes
-WHERE DL_ID = :DL_ID;
+WHERE Activities_ID = :Activities_ID;
 
 /* ============================================================
    FUNCTIONAL REQUIREMENT 3 – Meal Logging
@@ -83,50 +82,50 @@ WHERE DL_ID = :DL_ID;
    ============================================================ */
 
 -- Log a meal
-INSERT INTO Meal_Log (MealLog_ID, Calories_Goal, Protein, Fat, Carbs, Calories_Amount DL_ID)
-VALUES (:MealLog_ID, :Calories_Goal, :Protein, ,:Fat:, Carbs, :Calories_Amount, :DL_IDs);
+INSERT INTO Meal_Log (MealLog_ID, Calories_Goal, Protein, Fat, Carbs, Calories_Amount, DL_ID)
+VALUES (:MealLog_ID, :Calories_Goal, :Protein, :Fat, :Carbs, :Calories_Amount, :DL_ID);
 
 -- Log a Breakfast
 INSERT INTO MealLog_Breakfast (MealLog_ID, MLBreakfast)
 VALUES (:MealLog_ID, :MLBreakfast);
 
 -- Log a Lunch
-INSERT INTO MealLog_Lunch (MealLog_ID, MealLog_Lunch)
+INSERT INTO MealLog_Lunch (MealLog_ID, MLLunch)
 VALUES (:MealLog_ID, :MLLunch);
 
 -- Log a Dinner
-INSERT INTO MealLog_Dinner (MealLog_ID, MealLog_Dinner)
+INSERT INTO MealLog_Dinner (MealLog_ID, MLDinner)
 VALUES (:MealLog_ID, :MLDinner);
 
 -- Log a Snack
-INSERT INTO MealLog_Snack (MealLog_ID, MealLog_Snack)
+INSERT INTO MealLog_Snack (MealLog_ID, MLSnack)
 VALUES (:MealLog_ID, :MLSnack);
 
 
 -- Retrieve eated stuff at specific dates
 SELECT MealLog_ID, Calories_Goal, Protein, Fat, Carbs, Calories_Amount, DL_ID
 FROM Meal_Log
-WHERE DL_ID = :DL_ID
+WHERE DL_ID = :DL_ID;
 
 -- Retrieve a day's breakfast
 SELECT MealLog_ID, MLBreakfast
 FROM MealLog_Breakfast
-WHERE MealLog_ID = :MealLog_ID
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Retrieve a day's lunch
 SELECT MealLog_ID, MLLunch
 FROM MealLog_Lunch
-WHERE MealLog_ID = :MealLog_ID
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Retrieve a day's dinner
-SELECT MealLog_Dinner, MLDinner
+SELECT MealLog_ID, MLDinner
 FROM MealLog_Dinner
-WHERE MealLog_ID = :MealLog_ID
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Retrieve a day's snack
-SELECT MealLog_Snack, MLSnack
+SELECT MealLog_ID, MLSnack
 FROM MealLog_Snack
-WHERE MealLog_ID = :MealLog_ID
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Update meal macros and calories
 UPDATE Meal_Log
@@ -134,28 +133,28 @@ SET Calories_Goal = :Calories_Goal,
     Protein = :Protein,
     Fat = :Fat,
     Carbs = :Carbs,
-    Calories_Amount = :Calories_Amount,
-WHERE DL_ID = :DL_ID
+    Calories_Amount = :Calories_Amount
+WHERE DL_ID = :DL_ID;
 
 -- Update meal breakfast
 UPDATE MealLog_Breakfast
-SET MLBreakfast = :MLBreakfast,
-WHERE MealLog_ID = :MealLog_ID
+SET MLBreakfast = :MLBreakfast
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Update meal lunch
 UPDATE MealLog_Lunch
-SET MLLunch = :MLLunch,
-WHERE MealLog_ID = :MealLog_ID
+SET MLLunch = :MLLunch
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Update meal dinner
 UPDATE MealLog_Dinner
-SET MLDinner = :MLDinner,
-WHERE MealLog_ID = :MealLog_ID
+SET MLDinner = :MLDinner
+WHERE MealLog_ID = :MealLog_ID;
 
 -- Update meal snack
 UPDATE MealLog_Snack
-SET MLSnack = :MLSnack,
-WHERE MealLog_ID = :MealLog_ID
+SET MLSnack = :MLSnack
+WHERE MealLog_ID = :MealLog_ID;
 
 
 /* ============================================================
@@ -180,7 +179,7 @@ UPDATE Goals
 SET Daily_goal = :Daily_goal,
     Monthly_goal = :Monthly_goal,
     Yearly_goal = :Yearly_goal
-WHERE Goal_ID = :Goal_ID
+WHERE Goal_ID = :Goal_ID;
 
 
 /* ============================================================
@@ -190,7 +189,7 @@ WHERE Goal_ID = :Goal_ID
    ============================================================ */
 
 -- log friend information
-INSERT INTO Friends (Friend_ID, Login_Status, PU_ID)
+INSERT INTO Friend (Friend_ID, Login_Status, PU_ID)
 VALUES (:Friend_ID, :Login_Status, :PU_ID);
 
 -- log friend stats
@@ -206,82 +205,204 @@ WHERE PU_ID = :PU_ID;
 -- View friends stats
 SELECT Friend_ID, FStats
 FROM Friend_Stats
-WHERE Friend_ID = :Friend_ID
+WHERE Friend_ID = :Friend_ID;
 
 
 /* ============================================================
-   FUNCTIONAL REQUIREMENT 6 – Challenges
+   FUNCTIONAL REQUIREMENT 6 – Challenges 
    Description:
-   Join challenges, track points
+   Users can join daily challenges and special challenges and gain daily Rivals Credit
    ============================================================ */
 
+-- log challenges
+INSERT INTO Challenges (Challenge_ID, Daily_Challenge, Challenge_Complete, DailyRivals_Credit, Special_Challenge)
+VALUES (:Challenge_ID, :Daily_Challenge, :Challenge_Complete, :DailyRivals_Credit, :Special_Challenge);
 
-CHECK (challenge_complete = TRUE), then DailyRivals_Credit += User_ID.Credit
+-- View challenges
+SELECT Challenge_ID, Daily_Challenge, Challenge_Complete, DailyRivals_Credit, Special_Challenge
+FROM Challenges
+WHERE Challenge_ID = :Challenge_ID;
 
+--update challenges
+UPDATE Challenges
+SET Challenge_Complete = :Challenge_Complete
+WHERE Challenge_ID = :Challenge_ID;
 
--- FR6-A: Join a challenge
-INSERT INTO ChallengeParticipants (challenge_id, user_id, points)
-VALUES (:challenge_id, :user_id, 0);
-
--- FR6-B: View challenge leaderboard
-SELECT user_id, points
-FROM ChallengeParticipants
-WHERE challenge_id = :challenge_id
-ORDER BY points DESC;
+-- if challenge is completed w+e add the daily rival credit to person's current credit
+UPDATE Person
+JOIN Challenges ON Person.Challenge_ID = Challenges.Challenge_ID
+SET Person.Credit = Person.Credit + Challenges.DailyRivals_Credit
+WHERE Challenges.Challenge_Complete = TRUE;
 
 
 /* ============================================================
    FUNCTIONAL REQUIREMENT 7 – Device Integration (Stored Data)
    Description:
-   Store and retrieve health data imported from wearable devices.
+   Users can retrieve which device is sync and also update to device usuage
    ============================================================ */
 
--- FR7: Retrieve device-imported health data
-SELECT metric_type, metric_value, recorded_date
-FROM HealthMetrics
-WHERE user_id = :user_id
-  AND source = 'Device';
+-- retrieve device status
+SELECT Device_ID, Phone, Smart_watch, Implanted_chip, PU_ID
+FROM Device
+WHERE PU_ID = :PU_ID;
 
+
+-- Update person's device
+UPDATE Device
+SET    Phone = :Phone,
+       Smart_watch = :Smart_watch,
+       Implanted_chip = :Implanted_chip
+WHERE PU_ID = :PU_ID;
 
 /* ============================================================
    FUNCTIONAL REQUIREMENT 8 – Health Metric Tracking
    Description:
-   Log and retrieve health metrics such as steps, heart rate,
-   sleep, and blood pressure.
+   Log and retrieve health metrics such as weight, steps, sleep, and blood pressure.
    ============================================================ */
 
--- FR8-A: Log health metrics
-INSERT INTO HealthMetrics (
-    metric_id, user_id, metric_type,
-    metric_value, recorded_date
-)
-VALUES (
-    :metric_id, :user_id, :metric_type,
-    :metric_value, :recorded_date
-);
+-- log a person's steps
+INSERT INTO Steps (Step_ID, Step_Goal, Total_Steps, Daily_Steps, DL_ID)
+VALUES (:Step_ID, :Step_Goal, :Total_Steps, :Daily_Steps, :DL_ID);
 
--- FR8-B: Retrieve health metrics by date
-SELECT metric_type, metric_value
-FROM HealthMetrics
-WHERE user_id = :user_id
-  AND recorded_date = :recorded_date;
+-- retreive a person's steps
+SELECT Step_ID, Step_Goal, Total_Steps, Daily_Steps, DL_ID
+FROM Steps
+WHERE DL_ID = :DL_ID;
 
+
+-- log a person's weight
+INSERT INTO Weight (Weight_ID, Total_Weight, Weight_Gain, Weight_Loss, DL_ID)
+VALUES (:Weight_ID, :Total_Weight, :Weight_Gain, :Weight_Loss, :DL_ID);
+
+-- retreive a person's weight
+SELECT Weight_ID, Total_Weight, Weight_Gain, Weight_Loss, DL_ID
+FROM Weight
+WHERE DL_ID = :DL_ID;
+
+
+-- log a person's sleep 
+INSERT INTO Sleep_Hours (SleepHour_ID, Sleep_Quality, Hours_Slept, Sleep_Pattern, DL_ID)
+VALUES (:SleepHour_ID, :Sleep_Quality, :Hours_Slept, :Sleep_Pattern, :DL_ID);
+
+-- retrieve a person's sleep
+SELECT SleepHour_ID, Sleep_Quality, Hours_Slept, Sleep_Pattern, DL_ID
+FROM Sleep_Hours
+WHERE DL_ID = :DL_ID;
+
+
+-- log a person's blood pressure
+INSERT INTO Blood_Pressure (Blood_ID, Blood_Status, DL_ID)
+VALUES (:Blood_ID, :Blood_Status, :DL_ID);
+
+-- retrieve a person's blood pressure
+SELECT Blood_ID, Blood_Status, DL_ID
+FROM Blood_Pressure
+WHERE DL_ID = :DL_ID;
 
 /* ============================================================
-   FUNCTIONAL REQUIREMENT 9 – Health History Logging
+   FUNCTIONAL REQUIREMENT 9 – Medication Logging
    Description:
-   View historical health data organized by date.
+Users must be able to log when they should take their medications and how much.
    ============================================================ */
 
--- FR9: Retrieve health history ordered by date
-SELECT recorded_date, metric_type, metric_value
-FROM HealthMetrics
-WHERE user_id = :user_id
-ORDER BY recorded_date;
+   --Log the medication 
+INSERT INTO Medication (Medication_ID, Medication_Time, Dosage, DL_ID)
+VALUES (:Medication_ID, :Medication_Time, :Dosage, :DL_ID);
 
 
-/* ============================================================
-   END OF FILE
+-- retrieve medication information
+SELECT Medication_ID, Medication_Time, Dosage, DL_ID
+FROM Medication
+WHERE DL_ID = :DL_ID;
+
+
+-- update medication information
+UPDATE Medication
+SET    Medication_Time = :Medication_Time,
+       Dosage = :Dosage
+WHERE DL_ID = :DL_ID;
+
+
+ /* ============================================================
+   FUNCTIONAL REQUIREMENT 10 – medical record Logging
+   Description:
+   Log, view, retrieve medical record data organized by person.
+   For specific records like allegies, diseases, and disabilities
+   are sorted by Medical_ID
+   ============================================================ */
+-- log a person's medical record
+INSERT INTO Medical_Record (Medical_ID, Past_surgeries, Past_Medication, PU_ID)
+VALUES (:Medical_ID, :Past_surgeries, :Past_Medication, :PU_ID);
+
+-- retrieve a person's medical record
+SELECT Medical_ID, Past_surgeries, Past_Medication, PU_ID
+FROM   Medical_Record
+WHERE  PU_ID = :PU_ID;
+
+
+-- update a person's medical record
+UPDATE Medical_Record
+SET    Past_surgeries = :Past_surgeries,
+       Past_Medication = :Past_Medication
+WHERE  PU_ID = :PU_ID;
+
+
+-- log a person's medical record allegies
+INSERT INTO Medical_Record_Allegies (Medical_ID, MRAllegies)
+VALUES (:Medical_ID, :MRAllegies);
+
+-- retrieve a person's medical record allegies
+SELECT Medical_ID, MRAllegies
+FROM   Medical_Record_Allegies
+WHERE  Medical_ID = :Medical_ID;
+
+-- update a person's medical record allegies
+UPDATE Medical_Record_Allegies
+SET    MRAllegies = :MRAllegies
+WHERE  Medical_ID = :Medical_ID;
+
+
+-- log a person's medical record diseases
+INSERT INTO Medical_Record_Diseases (Medical_ID, MRDiseases)
+VALUES (:Medical_ID, :MRDiseases);
+
+-- retrieve a person's medical record diseases
+SELECT Medical_ID, MRDiseases
+FROM Medical_Record_Diseases
+WHERE Medical_ID = :Medical_ID;
+
+-- update a person's medical record diseases
+UPDATE Medical_Record_Diseases
+SET    MRDiseases = :MRDiseases
+WHERE  Medical_ID = :Medical_ID;
+
+
+-- log a person's medical record disabilities
+INSERT INTO Medical_Record_Disabilities (Medical_ID, MRDisabilities)
+VALUES (:Medical_ID, :MRDisabilities);
+
+-- retrieve a person's medical record disabilities
+SELECT Medical_ID, MRDisabilities
+FROM Medical_Record_Disabilities
+WHERE Medical_ID = :Medical_ID;
+
+-- update a person's medical record disabilities
+UPDATE Medical_Record_Disabilities
+SET    MRDisabilities = :MRDisabilities
+WHERE  Medical_ID = :Medical_ID;
+
+
+ /* ============================================================
+   FUNCTIONAL REQUIREMENT10 – Daily log
+   Description:
+   View daly log.
    ============================================================ */
 
+-- log a Daily log
+INSERT INTO Daily_Log (Log_ID, Log_Date, PU_ID)
+VALUES (:Log_ID, :Log_Date, :PU_ID);
 
+-- retrieve a Daily log
+SELECT Log_ID, Log_Date, PU_ID
+FROM Daily_Log
+WHERE PU_ID = :PU_ID;
