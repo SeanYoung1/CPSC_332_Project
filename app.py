@@ -1,3 +1,5 @@
+import random # for generating random IDS
+
 # create user
 # classes for each entity
 class Challenges:
@@ -166,10 +168,56 @@ class MealLog_Snack:
 
 
 # query daily logs
+def Random_User_ID():
+    user_id = random.randint(1, 1_000_000)
+
+    while user_id in Person.User_ID:
+        user_id = random.randint(1, 1_000_000)
+    
+    print(user_id)
+    return user_id
 
 def main():
-    print("Welcome to the Health Tracking App! Health Rivals!!")
+    # maybe make a account creation function first
+    print("Welcome to the Health Tracking App, Health Rivals!")
+    account_created = input("Do you have an account? (yes/no): ")
+    if account_created.lower() == 'no':
+        print("Let's create your account!")
+        account = Person(
+            User_ID = Random_User_ID(), # randomly generated ID
+            Email = input("Enter your email: "),
+            Credit = 0,
+            Fname = input("Enter your first name: "),
+            Middle_Initial = input("Enter your middle initial (If none, leave blank): "),
+            Lname = input("Enter your last name: "),
+            Height = input("Enter your height in inches (optional): "),
+            Birthday = input("Enter your birthday: "),    
+            Challenge_ID = () # randomly generated ID,                            
+        )
     
+        print("Account created successfully!")
+    else:
+        print("Welcome back! Please provide your user ID to log in.")
+        while True:
+            User_ID = input("User ID: ")
+            if Person.User_ID:
+                if User_ID in Person.User_ID:
+                    print("Login successful!")
+                    break
+                    #else:
+                    # print("User ID not found. Please try again.")
+                else:
+                    print("User ID not found. Please try again.")
+            else:
+                print("No users found.")
+                break
+    
+    print(Person.User_ID)
+
+
+    
+    
+        
     
 if __name__ == "__main__":
     main()
